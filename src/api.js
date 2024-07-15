@@ -24,6 +24,15 @@ const url = (urlName) => {
 export const nowPlaying = () =>
   fetch(url("movie/now_playing"), options).then((res) => res.json());
 
+export const popular = () =>
+  fetch(url("movie/popular"), options).then((res) => res.json());
+
+export const topRated = () =>
+  fetch(url("movie/top_rated"), options).then((res) => res.json());
+
+export const upComing = () =>
+  fetch(url("movie/upcoming"), options).then((res) => res.json());
+
 // 식이 한 줄만 나온다면 중괄호 안 열고 바로 적기 (바로 리턴함)
 // 기본 URl / 요청하는데 필요한 option
 // baseUrl 뒤에 현재 상영작의 링크도 적어줘야 하니 연결연산자인 + 로 "movie/now_playing"붙여주기

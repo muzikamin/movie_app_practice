@@ -1,23 +1,41 @@
 import { useEffect, useState } from "react";
-import { nowPlaying } from "../../api";
+import { nowPlaying, popular, topRated, upComing } from "../../api";
+import { Loading } from "../../components/Loading";
 
 export const Home = () => {
   const [nowData, setNowData] = useState();
+  const [popData, setPopData] = useState();
+  const [topData, settopData] = useState();
+  const [upData, setupData] = useState();
+  const [isLoading, setIsLoading] = useState(true); //초기값은 true(로딩 중)
 
   useEffect(() => {
     (async () => {
       try {
-        const { results } = await nowPlaying();
-        setNowData(results);
+        const { results: nowResult } = await nowPlaying();
+        const { results: popResult } = await popular();
+        const { results: topResult } = await topRated();
+        const { results: upResult } = await upComing();
+
+        console.log(popResult);
+
+        setNowData(nowResult);
+        setPopData(popResult);
+        settopData(topResult);
+        setupData(upResult);
+
+        // 위의 값들이 전부 다 처리가 되고난 뒤(읽혀지고 난 뒤) 로딩이 false 가 됨
+        setIsLoading(false);
       } catch (error) {
         console.log(error);
       }
     })();
   }, []);
 
-  console.log(nowData);
+  console.log(topData);
+  console.log(isLoading);
 
-  return <div>Home</div>;
+  return <>{isLoading ? <Loading /> : "홈"}</>;
 };
 
 // *예외
