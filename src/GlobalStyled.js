@@ -5,6 +5,11 @@ export const colors = {
   point: "crimson",
 };
 
+export const spacing = {
+  side: "100px",
+  moSide: "20px",
+};
+
 export const GlobalStyled = createGlobalStyle`  
     ${reset}
 
@@ -15,6 +20,7 @@ export const GlobalStyled = createGlobalStyle`
         background-color: #1d1d1d;
         color: white;
         letter-spacing: -1px;
+        word-break: keep-all;
     }
 
     a {
