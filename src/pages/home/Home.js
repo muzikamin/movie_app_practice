@@ -3,7 +3,11 @@ import { nowPlaying, popular, topRated, upComing } from "../../api";
 import { Loading } from "../../components/Loading";
 import styled from "styled-components";
 import { spacing } from "../../GlobalStyled";
-import { ORIGIN_URL } from "../../constant/imgUrl";
+import { ORIGIN_URL, W500_URL } from "../../constant/imgUrl";
+import { Link } from "react-router-dom";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import { Movies } from "./components/Movies";
 
 const MainBanner = styled.section`
   height: 80vh;
@@ -102,6 +106,11 @@ export const Home = () => {
             <h3>{nowData[0].title}</h3>
             <p>{nowData[0].overview.slice(0, 100) + "..."}</p>
           </MainBanner>
+
+          <Movies title="현재 상영 영화" movieData={nowData} />
+          <Movies title="인기 영화" movieData={popData} />
+          <Movies title="평점 좋음" movieData={topData} />
+          <Movies title="개봉예정" movieData={upData} />
         </>
       )}
     </>
