@@ -3,36 +3,60 @@ import { movieDetail } from "../../api";
 import { Loading } from "../../components/Loading";
 import styled from "styled-components";
 import { ORIGIN_URL } from "../../constant/imgUrl";
-import { spacing } from "../../GlobalStyled";
+import { useParams } from "react-router-dom";
 
 // ---------------------------------------------
 
 const Container = styled.div`
-  width: 100%;
-  padding: ${spacing.side};
+  padding: 150px 20%;
   display: flex;
-  flex-direction: row;
-  background-color: #1d1d1d;
+`;
 
-  img {
-    width: 50%;
+const CoverImg = styled.img`
+  width: 45%;
+  margin-right: 5%;
+  object-fit: cover;
+`;
+
+const ConWrap = styled.div`
+  width: 40%;
+
+  h3 {
+    font-size: 70px;
+    font-weight: 700;
+    margin-bottom: 30px;
   }
 `;
 
-const Con = styled.div`
-  width: 50%;
-  padding: ${spacing.side} 50px;
+const Info = styled.div`
+  span {
+    display: block;
+    padding: 10px 20px;
+    background-color: #555;
+    border-radius: 20px;
+    font-size: 18px;
+    font-weight: 400;
+    margin-right: 15px;
+  }
+  display: flex;
+`;
 
-  p {
-    font-size: 20px;
-    line-height: 30px;
+const Genres = styled.ul`
+  list-style: disc;
+  font-size: 18px;
+  margin-top: 20px;
+  margin-left: 20px;
+  li {
+    margin-top: 10px;
   }
 `;
 
-const Title = styled.div`
-  font-size: 50px;
-  font-weight: 900;
-  margin-bottom: 50px;
+const Desc = styled.div`
+  font-size: 18px;
+  font-weight: 400;
+  opacity: 0.7;
+  margin-top: 100px;
+  line-height: 30px;
 `;
 
 // ---------------------------------------------
@@ -40,11 +64,13 @@ const Title = styled.div`
 export const Detail = () => {
   const [detailData, setDetailData] = useState();
   const [isLoading, setIsLoading] = useState(true);
+  const { id: movieId } = useParams();
+  console.log();
 
   useEffect(() => {
     (async () => {
       try {
-        const data = await movieDetail(1022789);
+        const data = await movieDetail(movieId);
         console.log(data);
         setDetailData(data);
         setIsLoading(false);
@@ -57,34 +83,32 @@ export const Detail = () => {
   console.log(detailData);
 
   return (
-    <>
+    <div>
       {isLoading ? (
         <Loading />
       ) : (
-        <>
-          <Container>
-            <img src={ORIGIN_URL + detailData.poster_path} alt="" />
-            <Con>
-              <Title>{detailData.title}</Title>
-              <p>{`런타임 : ${detailData.runtime} 분`}</p>
-              <br />
-              <p>{`개봉일 : ${detailData.release_date}`}</p>
-              <br />
-              <p>
-                장르 <br />
-                {`- ${detailData.genres[0].name}`}
-                <br />
-                {`- ${detailData.genres[1].name}`}
-              </p>
-              <br />
-              <p>
-                줄거리 <br />
-                {detailData.overview}
-              </p>
-            </Con>
-          </Container>
-        </>
+        <Container>
+          <CoverImg
+            src={ORIGIN_URL + detailData.poster_path}
+            alt={detailData.title}
+          />
+          <ConWrap>
+            <h3>{detailData.title}</h3>
+            <Info>
+              <span>{detailData.release_date}</span>
+              <span>{Math.round(detailData.vote_average)}점</span>
+              <span>{detailData.runtime}분</span>
+            </Info>
+            <Genres>
+              {detailData.genres.map((genre) => (
+                <li key={genre.id}>{genre.name}</li>
+              ))}
+            </Genres>
+
+            <Desc>{detailData.overview}</Desc>
+          </ConWrap>
+        </Container>
       )}
-    </>
+    </div>
   );
 };
