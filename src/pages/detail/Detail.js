@@ -4,6 +4,7 @@ import { Loading } from "../../components/Loading";
 import styled from "styled-components";
 import { ORIGIN_URL } from "../../constant/imgUrl";
 import { useParams } from "react-router-dom";
+import { PageTitle } from "../../components/PageTitle";
 
 // ---------------------------------------------
 
@@ -88,6 +89,7 @@ export const Detail = () => {
         <Loading />
       ) : (
         <Container>
+          <PageTitle title={detailData.title} />
           <CoverImg
             src={ORIGIN_URL + detailData.poster_path}
             alt={detailData.title}
