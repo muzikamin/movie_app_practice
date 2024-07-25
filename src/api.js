@@ -36,10 +36,10 @@ export const upComing = () =>
 export const movieDetail = (movie_id) =>
   fetch(url(`movie/${movie_id}`), options).then((res) => res.json());
 
-export const searchMovie = (keyword) =>
-  fetch(url(`search/movie?query=${keyword}`), options).then((res) =>
-    res.json()
-  );
+export const searchMovie = (keyword) => {
+  const searchUrl = baseUrl + `search/movie?query=${keyword}&language=ko-kr`;
+  return fetch(searchUrl, options).then((res) => res.json());
+};
 
 // 식이 한 줄만 나온다면 중괄호 안 열고 바로 적기 (바로 리턴함)
 // 기본 URl / 요청하는데 필요한 option
