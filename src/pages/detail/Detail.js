@@ -5,6 +5,7 @@ import styled from "styled-components";
 import { ORIGIN_URL } from "../../constant/imgUrl";
 import { useParams } from "react-router-dom";
 import { PageTitle } from "../../components/PageTitle";
+import { useScrollTop } from "../../lib/useScrollTop";
 
 // ---------------------------------------------
 
@@ -63,10 +64,10 @@ const Desc = styled.div`
 // ---------------------------------------------
 
 export const Detail = () => {
+  useScrollTop();
   const [detailData, setDetailData] = useState();
   const [isLoading, setIsLoading] = useState(true);
   const { id: movieId } = useParams();
-  console.log();
 
   useEffect(() => {
     (async () => {
