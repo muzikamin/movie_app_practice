@@ -80,7 +80,7 @@ export const Detail = () => {
         console.log(error);
       }
     })();
-  }, []);
+  }, [movieId]);
 
   console.log(detailData);
 
